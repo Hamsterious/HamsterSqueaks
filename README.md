@@ -12,3 +12,12 @@
 - Juiciness: Animations, Sounds.
 - Tutorials/Education.
 - Recommendations: Games, Writers, Bloggers, Guides, Exercises, Concepts.
+
+## Stack
+- Client side: Angular (NodeJS, NPM) 
+- Server side: .NET Core (NuGET, SDKs)
+- VS Code (Editor)
+- VS 2017 (IDE)
+- SublimeText 3 (Notes, logs, tasks)
+- Git (Source control)
+- GitHub (Remote Repository)
