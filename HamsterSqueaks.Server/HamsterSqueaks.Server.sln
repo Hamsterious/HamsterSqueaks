@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterSqueaks.Server", "HamsterSqueaks.Server\HamsterSqueaks.Server.csproj", "{66040068-509E-4F2A-8325-486F4AC69ECE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66040068-509E-4F2A-8325-486F4AC69ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66040068-509E-4F2A-8325-486F4AC69ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66040068-509E-4F2A-8325-486F4AC69ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66040068-509E-4F2A-8325-486F4AC69ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {620DF418-BB16-4BA4-BC63-9FF1D82B6009}
+	EndGlobalSection
+EndGlobal
