@@ -8,12 +8,16 @@ using HamsterSqueaks.Server.Models;
 
 namespace HamsterSqueaks.Server.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class HamsterSqueaksDbContext : IdentityDbContext<HamsterSqueaksUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public HamsterSqueaksDbContext(DbContextOptions<HamsterSqueaksDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<Author> Authors { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

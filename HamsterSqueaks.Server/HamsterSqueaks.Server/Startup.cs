@@ -26,11 +26,11 @@ namespace HamsterSqueaks.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<HamsterSqueaksDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<HamsterSqueaksUser, IdentityRole>()
+                .AddEntityFrameworkStores<HamsterSqueaksDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
@@ -61,7 +61,7 @@ namespace HamsterSqueaks.Server
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action}/{id?}");
             });
         }
     }
