@@ -11,7 +11,7 @@ using System;
 namespace HamsterSqueaks.Server.Migrations
 {
     [DbContext(typeof(HamsterSqueaksDbContext))]
-    [Migration("20170909160315_Initial")]
+    [Migration("20170909162600_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,9 +44,11 @@ namespace HamsterSqueaks.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int?>("AuthorId");
 
                     b.Property<string>("Content");
+
+                    b.Property<TimeSpan>("EstimatedReadTime");
 
                     b.Property<DateTime?>("Published");
 
@@ -57,8 +59,6 @@ namespace HamsterSqueaks.Server.Migrations
                     b.Property<DateTime?>("Updated");
 
                     b.Property<string>("UrlSlug");
-
-                    b.Property<TimeSpan>("estimatedReadTime");
 
                     b.HasKey("Id");
 
@@ -236,9 +236,8 @@ namespace HamsterSqueaks.Server.Migrations
             modelBuilder.Entity("HamsterSqueaks.Server.Models.BlogPost", b =>
                 {
                     b.HasOne("HamsterSqueaks.Server.Models.Author", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("BlogPosts")
+                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
