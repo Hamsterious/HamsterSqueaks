@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace HamsterSqueaks.Server.Data.Migrations
+namespace HamsterSqueaks.Server.Migrations
 {
     [DbContext(typeof(HamsterSqueaksDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170909160315_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +28,7 @@ namespace HamsterSqueaks.Server.Data.Migrations
 
                     b.Property<string>("PenName");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("UserId1");
 
@@ -47,9 +48,17 @@ namespace HamsterSqueaks.Server.Data.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<DateTime?>("LastEdit");
-
                     b.Property<DateTime?>("Published");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("TitlePictureUrl");
+
+                    b.Property<DateTime?>("Updated");
+
+                    b.Property<string>("UrlSlug");
+
+                    b.Property<TimeSpan>("estimatedReadTime");
 
                     b.HasKey("Id");
 
