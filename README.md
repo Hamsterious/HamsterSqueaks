@@ -21,3 +21,5 @@
 - SublimeText 3 (Notes, logs, tasks)
 - Git (Source control)
 - GitHub (Remote Repository)
+- Postman (API testing)
+- Swagger (API documentation)
