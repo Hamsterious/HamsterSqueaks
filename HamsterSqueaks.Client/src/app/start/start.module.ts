@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { PostModule } from '../modules/blog/post/post.module';
+import { NavigationModule } from '../navigation/navigation.module';
 import { Routing, RoutingModule } from '../routing/routing.module';
 import { StartComponent } from './start.component';
-import { NavigationModule } from '../navigation/navigation.module';
 
 @NgModule({
   declarations: [
