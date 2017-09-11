@@ -15,7 +15,7 @@
 
 ## Stack
 - [Angular](https://angular.io/) (NodeJS, NPM) 
-- [.NET Core](https://www.microsoft.com/net/core#windowscmd) (NuGET, SDKs)
+- [ASP.NET Core](https://www.microsoft.com/net/core#windowscmd) (NuGET, SDKs)
 - [VS Code](https://code.visualstudio.com/) (Editor)
 - [VS 2017](https://www.visualstudio.com/) (IDE)
 - [SublimeText 3](https://www.sublimetext.com/3) (Notes, logs, tasks)
