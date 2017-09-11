@@ -14,12 +14,13 @@
 - Recommendations: Games, Writers, Bloggers, Guides, Exercises, Concepts.
 
 ## Stack
-- Client side: Angular (NodeJS, NPM) 
-- Server side: .NET Core (NuGET, SDKs)
+- Angular (NodeJS, NPM) 
+- .NET Core (NuGET, SDKs)
 - VS Code (Editor)
 - VS 2017 (IDE)
 - SublimeText 3 (Notes, logs, tasks)
 - Git (Source control)
 - GitHub (Remote Repository)
 - Postman (API testing)
-- Swagger (API documentation)
+- (Swagger)[https://swagger.io/] (API documentation)
+- Swashbuckle.AspNetCore (.NET Core package)
