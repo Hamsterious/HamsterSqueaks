@@ -12,6 +12,7 @@ using HamsterSqueaks.Server.Data;
 using HamsterSqueaks.Server.Models;
 using HamsterSqueaks.Server.Services;
 using Swashbuckle.AspNetCore.Swagger;
+using HamsterSqueaks.Server.Swagger.Filters;
 
 namespace HamsterSqueaks.Server
 {
@@ -43,6 +44,10 @@ namespace HamsterSqueaks.Server
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+
+                // Custom schemas
+                c.SchemaFilter<BlogPostSchema>();
+                c.SchemaFilter<AuthorSchema>();
             });
         }
 
