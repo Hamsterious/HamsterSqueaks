@@ -8,6 +8,7 @@ namespace HamsterSqueaks.Server.Exceptions
     /// <summary>
     /// Throw when a ViewModels model has not been added.
     /// </summary>
+    [Serializable]
     public class ModelMissingException : Exception
     {
         public ModelMissingException()

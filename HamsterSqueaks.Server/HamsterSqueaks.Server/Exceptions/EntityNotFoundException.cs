@@ -8,6 +8,7 @@ namespace HamsterSqueaks.Server.Exceptions
     /// <summary>
     /// Throw when a database entity cannot be found.
     /// </summary>
+    [Serializable]
     public class EntityNotFoundException : Exception
     {
         public EntityNotFoundException()

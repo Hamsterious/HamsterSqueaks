@@ -7,6 +7,9 @@ using HamsterSqueaks.Server.Data;
 using HamsterSqueaks.Server.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using HamsterSqueaks.Server.Helpers;
+using Microsoft.AspNetCore.Identity;
+using HamsterSqueaks.Server.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace HamsterSqueaks.Server.Services
 {
@@ -15,80 +18,114 @@ namespace HamsterSqueaks.Server.Services
     /// </summary>
     public class UserService : IUserService
     {
-        private HamsterSqueaksDbContext _dbContext;
+        /// <summary>
+        /// Read-only access to the UserManager.
+        /// </summary>
+        private readonly UserManager<HamsterSqueaksUser> _userManager;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public UserService(HamsterSqueaksDbContext dbContext)
+        /// <summary>
+        /// Default constructor with injected services.
+        /// </summary>
+        /// <param name="userManager">Injected UserManager service.</param>
+        /// <param name="httpContext">Injected HTTP context.</param>
+        public UserService(
+            UserManager<HamsterSqueaksUser> userManager,
+            IHttpContextAccessor httpContext
+            )
         {
-            _dbContext = dbContext;
+            _userManager = userManager;
+            _httpContext = httpContext;
         }
 
         /// <summary>
-        /// Gets all models.
+        /// Gets all users.
         /// </summary>
-        /// <returns>A list of models in ViewModels.</returns>
+        /// <returns>List of all users.</returns>
         public async Task<IEnumerable<UserViewModel>> GetAll()
         {
-            return await _dbContext.Users.Select(x => new UserViewModel(x)).ToListAsync();
+            return (await _userManager.Users.ToListAsync()).Select(x => new UserViewModel(x));
         }
 
         /// <summary>
-        /// Gets a model by its Id.
+        /// Gets a single user.
         /// </summary>
-        /// <returns>The model in a ViewModel.</returns>
-        public async Task<UserViewModel> Get(string Id)
+        /// <param name="userId">Id of the user.</param>
+        /// <returns>User view model.</returns>
+        public async Task<UserViewModel> Get(string userId)
         {
-            var dbModel = await _dbContext.Users.SingleAsync(x => x.Id.Equals(Id));
-            ServiceHelpers.ThrowIfNotFound(dbModel);
-
-            return new UserViewModel(dbModel);
+            var model = await _userManager.FindByIdAsync(userId);
+            ServiceHelpers.ThrowIfNotFound(model);
+            return new UserViewModel(model);
         }
 
         /// <summary>
-        /// Creates a new model.
+        /// Gets a single user using ClaimsPrincipal.
         /// </summary>
-        /// <returns>The created model in a ViewModel.</returns>
-        public async Task<UserViewModel> Create(UserViewModel viewModel)
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        public async Task<HamsterSqueaksUser> Get()
         {
-            var model = viewModel.Model;
-            ServiceHelpers.ThrowIfMissing(model);
-
-            _dbContext.Users.Add(model);
-            await _dbContext.SaveChangesAsync();
-
-            return viewModel;
+            return await _userManager.GetUserAsync(_httpContext.HttpContext.User);
         }
 
         /// <summary>
-        /// Edits a model.
+        /// Creates a user.
         /// </summary>
-        /// <returns>The updated model in a ViewModel.</returns>
-        public async Task<UserViewModel> Edit(UserViewModel viewModel)
+        /// <param name="user">User view model.</param>
+        /// <returns>IdentityResult of the create process.</returns>
+        public async Task<IdentityResult> Create(UserViewModel user)
         {
-            var model = viewModel.Model;
-            ServiceHelpers.ThrowIfMissing(model);
-
-            var dbModel = Get(viewModel.Id);
-            ServiceHelpers.ThrowIfNotFound(dbModel);
-
-            _dbContext.Entry(dbModel).CurrentValues.SetValues(model);
-            await _dbContext.SaveChangesAsync();
-
-            return viewModel;
+            return await _userManager.CreateAsync(user.Model, user.Password);
         }
 
         /// <summary>
-        /// Deletes the model.
+        /// Edits a user by ID.
         /// </summary>
-        /// <returns>The deleted model in a ViewModel.</returns>
-        public async Task<UserViewModel> Delete(UserViewModel viewModel)
+        /// <param name="userId">ID of the user.</param>
+        /// <param name="viewModel">User view model.</param>
+        /// <returns>IdentityResult of the edit process.</returns>
+        public async Task<IdentityResult> Edit(string userId, UserViewModel viewModel)
         {
-            var model = viewModel.Model;
-            ServiceHelpers.ThrowIfMissing(model);
+            viewModel.Model.Id = userId;
+            var model = await _userManager.FindByIdAsync(userId.ToString());
+            ServiceHelpers.ThrowIfNotFound(model);
+            model.Email = viewModel.Email ?? model.Email;
+            return await _userManager.UpdateAsync(model);
+        }
 
-            _dbContext.Remove(model);
-            await _dbContext.SaveChangesAsync();
+        /// <summary>
+        /// Sets a password for an existing user, by ID.
+        /// </summary>
+        /// <param name="userId">Id of the user.</param>
+        /// <param name="viewModel">User view model.</param>
+        /// <returns>IdentityResult of the validation proccess.</returns>
+        public async Task<IdentityResult> SetPassword(string userId, UserViewModel viewModel)
+        {
+            var model = await _userManager.FindByIdAsync(userId.ToString());
+            ServiceHelpers.ThrowIfNotFound(model);
 
-            return viewModel;
+            var validationResult = await new PasswordValidator<HamsterSqueaksUser>().ValidateAsync(_userManager, model, viewModel.Password);
+            if (validationResult.Succeeded)
+            {
+                await _userManager.RemovePasswordAsync(model);
+                await _userManager.AddPasswordAsync(model, viewModel.Password);
+            }
+            return validationResult;
+        }
+
+        /// <summary>
+        /// Deletes a user.
+        /// </summary>
+        /// <param name="userId">ID of the user.</param>
+        /// <returns>Deleted user view model.</returns>
+        public async Task<UserViewModel> Delete(string userId)
+        {
+            var model = await _userManager.Users.SingleOrDefaultAsync(x => x.Id.Equals(userId));
+            ServiceHelpers.ThrowIfNotFound(model);
+
+            await _userManager.DeleteAsync(model);
+            return new UserViewModel(model);
         }
     }
 }

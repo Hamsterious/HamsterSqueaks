@@ -7,14 +7,6 @@ namespace HamsterSqueaks.Server.ViewModels
     /// </summary>
     public class UserViewModel
     {
-
-        #region Public properties
-
-        /// <summary>
-        /// The underlying model for this view model.
-        /// </summary>
-        public HamsterSqueaksUser Model { get { return _model; } set { _model = value; } }
-
         /// <summary>
         /// The users Id. Note this is a Guid.
         /// </summary>
@@ -30,29 +22,30 @@ namespace HamsterSqueaks.Server.ViewModels
         /// </summary>
         public string UserName { get { return _model.UserName; } set { _model.UserName = value; } }
 
-        #endregion
+        /// <summary>
+        /// The users password.
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
+        /// The confirmed user password.
+        /// </summary>
+        public string ConfirmPassword { get; set; }
+
+        /// <summary>
+        /// The underlying model for this view model.
+        /// </summary>
+        public HamsterSqueaksUser Model { get { return _model; } set { _model = value; } }
 
         private HamsterSqueaksUser _model { get; set; }
 
-        #region Constructors
-
         /// <summary>
-        /// Default contructor. Create a new HamsterSqueaksUser model to base the UserViewModel off.
+        /// Default contructor. 
         /// </summary>
-        public UserViewModel()
+        /// <param name="model">The HamsterSqueaksUser model to base the UserViewModel of.</param>
+        public UserViewModel(HamsterSqueaksUser model = default(HamsterSqueaksUser))
         {
-            _model = new HamsterSqueaksUser();
+            _model = model ?? new HamsterSqueaksUser();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="model">The HamsterSqueaksUser model to base the UserViewModel off.</param>
-        public UserViewModel(HamsterSqueaksUser model)
-        {
-            _model = model;
-        }
-
-        #endregion
     }
 }
