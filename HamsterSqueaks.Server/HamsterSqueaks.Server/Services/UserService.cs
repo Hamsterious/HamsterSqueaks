@@ -1,10 +1,7 @@
 ﻿using HamsterSqueaks.Server.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HamsterSqueaks.Server.Data;
-using HamsterSqueaks.Server.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using HamsterSqueaks.Server.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -62,7 +59,6 @@ namespace HamsterSqueaks.Server.Services
         /// <summary>
         /// Gets a single user using ClaimsPrincipal.
         /// </summary>
-        /// <param name="user">The user.</param>
         /// <returns></returns>
         public async Task<HamsterSqueaksUser> Get()
         {
