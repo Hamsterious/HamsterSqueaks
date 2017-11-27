@@ -9,6 +9,7 @@ using HamsterSqueaks.Server.Models;
 using HamsterSqueaks.Server.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using HamsterSqueaks.Server.Swagger.Filters;
+using HamsterSqueaks.Middleware;
 
 namespace HamsterSqueaks.Server
 {
@@ -52,8 +53,12 @@ namespace HamsterSqueaks.Server
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             ConfigureEnvironmentBehavior(app, env);
+            app.UseMiddleware<NotFoundMiddleware>(env);
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials().Build());
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();
+            // SeedData.Initialize(app.ApplicationServices, dbContext, userManager, roleManager);
             ConfigureMvc(app);
             ConfigureSwagger(app);
         }
